@@ -1,0 +1,2 @@
+# React-native
+Hi , I have created this app using react-native , This app has a user login screen with validation, I have used formik for it also to store user login information  I have used Redux. This app is a food shopping app, it has various foods wwhich is coming from json(inbuilt), The cart is handled by redux, There's onbording screen, Food page containing dishes and their price,there's detail page showing detail abou page and than u can add to cart. for api i have used dog api(purpose was to learn api)
