@@ -1,0 +1,181 @@
+import { View, Text, TextInput,StyleSheet,ScrollView } from 'react-native'
+import React,{useRef} from 'react'
+import {Field } from 'formik'
+import { LoginInitialValues, LoginValidationModel } from './Models/LoginValidationModel'
+import ErrorMessage from './ErrorMessage'
+
+const Formik = () => {
+    const emailRef=useRef(null);
+    const passRef=useRef(null);
+    const firstNameRef=useRef(null);
+    const lastNameRef=useRef(null);
+    const phoneNumber=useRef(null);
+
+    const submitForm=(values)=>{
+        console.log(values);
+    }
+  return (
+    <View style={styles.parent}>
+       <ScrollView>
+        <Text style={styles.btnLabel}>Sign Up</Text>
+        <View style={styles.form}>
+        <Formik
+     initialValues={LoginInitialValues}
+     validationSchema={LoginValidationModel}
+     validateOnMount
+     onSubmit={values =>submitForm(values)} >
+     {({ handleChange, handleBlur, handleSubmit, values,isValid,errors,touched }) => (
+         <>
+         <Field
+         component={TextInput}
+         style={[styles.Text1,touched.firstName && errors.firstName && styles.errorInput]}
+         placeholder="First Name"
+         placeholderTextColor='#ccc'
+         autoCapitalize='characters'
+         autoComplete='off'
+         keyboardType='default'
+         returnKeyType='next'
+         textContentType='name'
+         innerRef={firstNameRef}
+         autoFocus
+         onSubmitEditing={()=>nameRef.current.focus()}
+         onChangeText={handleChange('firstName')}
+         value={values.firstName}
+         onBlur={handleBlur('firstName')}
+         />
+                  <ErrorMessage label={errors.firstName} />
+
+            <Field
+            component={TextInput}
+            style={[styles.Text1,touched.lastName && errors.lastName  && styles.errorInput]}
+            placeholder="Last Name"
+         placeholderTextColor='#ccc'
+         autoCapitalize='characters'
+         autoComplete='off'
+         keyboardType='default'
+         returnKeyType='next'
+         textContentType='middleName'
+         innerRef={lastNameRef}
+         onSubmitEditing={()=>lastNameRef.current.focus()}
+         onChangeText={handleChange('lastName')}
+         value={values.lastName}
+         onBlur={handleBlur('lastName')}
+
+         />
+                  <ErrorMessage label={errors.lastName} />
+
+            <Field
+            component={TextInput}
+            style={[styles.Text1,touched.phoneNumber && errors.phoneNumber  && styles.errorInput]}
+            placeholder="Phone Number"
+         placeholderTextColor='#ccc'
+         autoCapitalize="none"
+         autoComplete='off'
+         keyboardType='phone-pad'
+         returnKeyType='next'
+         textContentType='postalCode'
+         maxLength={10}
+         innerRef={phoneNumber}
+         onSubmitEditing={submitForm}
+         onChangeText={handleChange('phoneNumber')}
+         value={values.phoneNumber}
+         onBlur={handleBlur('phoneNumber')}
+
+         />
+                  <ErrorMessage label={errors.phoneNumber} />
+
+         <Field
+         component={TextInput}
+         style={[styles.Text1,touched.email && errors.email  && styles.errorInput]}
+         placeholder="Enter your Email"
+         placeholderTextColor='#ccc'
+         autoCapitalize='none'
+         autoComplete='off'
+         keyboardType='email-address'
+         returnKeyType='next'
+         textContentType='emailAddress'
+         innerRef={emailRef}
+         onSubmitEditing={()=>passRef.current.focus()}
+       //   autoFocus
+         autoCapitalize='none'
+         onChangeText={handleChange('email')}
+         value={values.email}
+         onBlur={handleBlur('email')}
+         />
+         <ErrorMessage label={errors.email} />
+          <Field
+          component={TextInput}
+          style={[styles.Text1,touched.password && errors.password  && styles.errorInput]}
+          placeholder="Enter your Password"
+         placeholderTextColor='#ccc'
+         autoCapitalize='none'
+         autoComplete='off'
+         keyboardType='default'
+         returnKeyType='done'
+         textContentType='password'
+         innerRef={passRef}
+         onSubmitEditing={()=>Keyboard.dismiss()}
+         onChangeText={handleChange('password')}
+         secureTextEntry
+         value={values.password}
+         onBlur={handleBlur('password')}
+        />
+                 <ErrorMessage label={errors.password} />
+
+        <Pressable style={[styles.button, !isValid && styles.disabledButton]} disbled={!isValid} onPress={handleSubmit}>
+          <Text style={styles.btnLabel}>Login</Text>
+      </Pressable>
+         </>
+     )}
+   </Formik>
+      </View>
+      </ScrollView>
+      </View>
+  )
+}
+
+const styles=StyleSheet.create({
+    parent:{
+        flex:1,
+        padding:16
+    },
+    form:{
+        marginVertical:20,
+    },
+    Text1:{
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+        borderColor:'#ccc',
+        backgroundColor:"#fff",
+        fontSize:16,
+        borderRadius:4,
+        marginBottom:2, 
+        marginTop:16     
+           
+    },
+    errorInput:{
+    borderColor:'red',
+        color:'red'
+    },
+    button:{
+        backgroundColor:'#1261C0',
+        margin:20,
+        paddingVertical:15,
+        borderRadius:8
+
+    },
+    btnLabel:{
+        textAlign:'center',
+        fontSize:16,
+        fontWeight:'bold',
+        color:'#CCC'
+    },
+    disabledButton:{
+        backgroundColor:"#ccc",
+    }
+
+})
+
+export default Formik
